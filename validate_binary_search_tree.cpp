@@ -1,50 +1,55 @@
 #include <iostream>
 #include <vector>
 
-//Definition for a binary tree node.
 using namespace std;
+
+
 
 struct TreeNode {
   int val;
   TreeNode *left;
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
-  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
   TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+vector<TreeNode*> visited = {};
 
-void helper(TreeNode* node, vector<int>* visited){
-  
-  if (node->left != nullptr){
-    helper(node->left, visited);
+void helper(TreeNode* node){
+  //left
+  if(node->left != nullptr){
+    helper(node->left);
   }
   
-  visited->push_back(node->val);
+  //add node to visited
+  visited.push_back(node);
 
-  if (node->right != nullptr){
-    helper(node->right, visited);
+  //right
+  if(node->right != nullptr){
+    helper(node->right);
   }
 }
 
 
-
-bool isValidBST(TreeNode* root) {
-  vector<int> visited;
-  TreeNode* cur = root;
-  helper(cur, &visited);
-
-  int val;
-  if(visited.size() <== 2){
-    return true;
+TreeNode* constructTree(int left, int right){
+  if(left > right){
+    return nullptr;
   }
+  int mid = (left + right) / 2;
 
-  for(int i=1;i<visited.size();i++){
-    if(visited[i] < visited[i-1]){
-      return false;
-    }
-    cout << visited[i] << ", ";
-  }
-  cout << endl; 
-  return true;
+  TreeNode* root = visited[mid];
+  root->left = constructTree(left, mid-1);
+  root->right = constructTree(mid+1, right);
+  return root;
+}
+
+
+TreeNode* balanceBST(TreeNode* root) {
+  helper(root);
+  //In order is lnr
+
+  TreeNode* newtree = constructTree(0, visited.size() - 1);
+
+
+  return newtree;
 }
