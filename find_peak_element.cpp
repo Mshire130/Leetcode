@@ -1,23 +1,25 @@
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
 int helper(vector<int>& nums, int left, int right){
+
+  if (left == right){
+    return left;
+  }
+
   int mid = left + (right - left) / 2;
 
-  if(nums[mid] < nums[mid-1]){
+  if(nums[mid] > nums[mid + 1]){
     //check LHS
-    right = mid;
-    helper(nums, left, right);
+    
+    return helper(nums, left, mid);
 
   }
-  else if(nums[mid] < nums[mid+1]){
-    left = mid;
-    helper(nums, left, right);
-    //check RHS
+  //check RHS
+  return helper(nums, mid+1, right);
 
-  }
-  else{
-    return mid;
-  }
-
-  return mid;
 }
 
 int findPeakElement(vector<int>& nums) {
