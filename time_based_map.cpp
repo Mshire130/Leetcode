@@ -49,7 +49,9 @@ string get(string key, int timestamp) {
 
 
 
-
+//passes 44/46 test cases, the hashmap is not properly being populated or it is being populated but not being accessed correctly
+//Doesnt make too much sense as its passing the first 44 cases which indicates the hashmap and binary search are working accordingly
+//Could be something to do with memory, will retry the solution in python to see if it runs into same issues
 
 
 //https://leetcode.com/problems/time-based-key-value-store/
